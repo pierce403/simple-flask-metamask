@@ -1,1 +1,1 @@
-web: gunicorn -w 4 -b 0.0.0.0:$PORT -k gevent app:app --log-level debug
+web: gunicorn -w 4 -b 0.0.0.0:$PORT -k gevent server:app --log-level debug

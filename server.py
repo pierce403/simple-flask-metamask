@@ -15,8 +15,8 @@ from flask_jwt_extended import JWTManager, jwt_required, create_access_token, cr
 
 app = Flask(__name__,static_url_path='/static')
 app.jinja_env.add_extension('jinja2.ext.do')
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
-#db = SQLAlchemy(app)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+db = SQLAlchemy(app)
 
 # Setup the Flask-JWT-Extended extension
 # log2(26^22) ~= 100 (pull at least 100 bits of entropy)
