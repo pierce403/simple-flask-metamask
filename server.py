@@ -11,7 +11,7 @@ import os
 from web3.auto import w3
 from eth_account.messages import defunct_hash_message
 
-from flask_jwt_extended import JWTManager, jwt_required, create_access_token, create_refresh_token, get_jwt_identity
+from flask_jwt_extended import JWTManager, jwt_required, create_access_token, create_refresh_token, get_jwt_identity, set_access_cookies, set_refresh_cookies
 
 app = Flask(__name__,static_url_path='/static')
 app.jinja_env.add_extension('jinja2.ext.do')
@@ -21,6 +21,11 @@ db = SQLAlchemy(app)
 # Setup the Flask-JWT-Extended extension
 # log2(26^22) ~= 100 (pull at least 100 bits of entropy)
 app.config['JWT_SECRET_KEY'] = ''.join(random.choice(string.ascii_lowercase) for i in range(22))
+app.config['JWT_TOKEN_LOCATION'] = ['cookies']
+app.config['JWT_COOKIE_SECURE'] = True
+app.config['JWT_ACCESS_COOKIE_PATH'] = '/api/'
+app.config['JWT_REFRESH_COOKIE_PATH'] = '/token/refresh'
+app.config['JWT_COOKIE_CSRF_PROTECT'] = True
 jwt = JWTManager(app)
 
 @app.before_first_request
@@ -43,11 +48,16 @@ class User(db.Model):
 def landing():
   return render_template("index.html")
 
-@app.route('/sessions/', methods=['POST'])
-def create_session():
+@app.route('/secret')
+@jwt_required
+def secret():
+  current_user = get_jwt_identity()
+  return ("HELLO "+str(current_server))
+
+@app.route('/login', methods=['POST'])
+def login():
 
     print("[+] creating session")
-    #auth_type = request.json.get('auth_type', AuthType.EMAIL)
 
     print("info: "+(str(request.json)))
 
@@ -71,7 +81,7 @@ def create_session():
     access_token = create_access_token(identity=public_address)
     refresh_token = create_refresh_token(identity=public_address)
 
-    return jsonify({
-        'access_token': access_token,
-        'refresh_token': refresh_token,
-    }), 200
+    resp = jsonify({'login': True})
+    set_access_cookies(resp, access_token)
+    set_refresh_cookies(resp, refresh_token)
+    return resp, 200

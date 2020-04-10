@@ -9,3 +9,4 @@ https://web3py.readthedocs.io/en/stable/web3.eth.account.html
 
 https://flask-jwt-extended.readthedocs.io/en/stable/basic_usage/
 
+https://flask-jwt-extended.readthedocs.io/en/stable/tokens_in_cookies/

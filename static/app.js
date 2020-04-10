@@ -21,11 +21,17 @@ function handleAuth(accountAddress, signature)
   console.log(accountAddress);
   console.log(signature);
 
-  fetch('sessions/?123', {
+  fetch('login', {
     method: 'post',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify([accountAddress,signature])
+  }).then((response) => {
+    return response.json();
   })
+  .then((data) => {
+    console.log(data);
+  });
+
 }
 
 ethereum.enable().then(function () {
