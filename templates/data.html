@@ -1,0 +1,15 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN"><html>
+<title>Directory listing for /data/</title>
+<body>
+<h2>Directory listing for /data/</h2>
+<hr>
+<ul>
+{% for file in files %}
+<li><a href="{{file}}">{{file}}</a>
+{% endfor %}
+</ul>
+<hr>
+</body>
+</html>
+
