@@ -23,7 +23,7 @@ db = SQLAlchemy(app)
 app.config['JWT_SECRET_KEY'] = ''.join(random.choice(string.ascii_lowercase) for i in range(22))
 app.config['JWT_TOKEN_LOCATION'] = ['cookies']
 app.config['JWT_COOKIE_SECURE'] = True
-app.config['JWT_ACCESS_COOKIE_PATH'] = '/api/'
+#app.config['JWT_ACCESS_COOKIE_PATH'] = '/api/'
 app.config['JWT_REFRESH_COOKIE_PATH'] = '/token/refresh'
 app.config['JWT_COOKIE_CSRF_PROTECT'] = True
 jwt = JWTManager(app)
@@ -52,7 +52,7 @@ def landing():
 @jwt_required
 def secret():
   current_user = get_jwt_identity()
-  return ("HELLO "+str(current_server))
+  return ("HELLO "+str(current_user))
 
 @app.route('/login', methods=['POST'])
 def login():
