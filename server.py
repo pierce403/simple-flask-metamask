@@ -54,7 +54,12 @@ def landing():
 @jwt_required
 def secret():
   current_user = get_jwt_identity()
-  return ("HELLO "+str(current_user)+" you have "+str(tokencount(current_user))+" GST")
+  numtokens = tokencount(current_user)
+  if numtokens > 100:
+    msg="The Galaxy is on Orion's Belt"
+  else:
+    msg="You need more than 100 GST to view this message."
+  return ("HELLO "+str(current_user)+" "+msg)
 
 @app.route('/login', methods=['POST'])
 def login():
