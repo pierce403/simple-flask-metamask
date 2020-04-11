@@ -13,6 +13,8 @@ from eth_account.messages import defunct_hash_message
 
 from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity, set_access_cookies
 
+from ethhelper import *
+
 app = Flask(__name__,static_url_path='/static')
 app.jinja_env.add_extension('jinja2.ext.do')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
@@ -51,7 +53,7 @@ def landing():
 @jwt_required
 def secret():
   current_user = get_jwt_identity()
-  return ("HELLO "+str(current_user))
+  return ("HELLO "+str(current_user)+" you have "+str(tokencount(current_user))+" GST")
 
 @app.route('/login', methods=['POST'])
 def login():
