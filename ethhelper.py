@@ -13,8 +13,9 @@ gstAddress = '0x382f5DfE9eE6e309D1B9D622735e789aFde6BADe'
 gstToken = w3.eth.contract(address=gstAddress,abi=erc20abi)
 
 def tokencount(address):
-
-  return gstToken.functions.balanceOf(address).call()
+  decimals = gstToken.functions.decimals().call()
+  
+  return int(gstToken.functions.balanceOf(address).call())/10**decimals
 
 print("tokens at:")
 print(tokencount('0x7ab874Eeef0169ADA0d225E9801A3FfFfa26aAC3'))
