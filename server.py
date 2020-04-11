@@ -11,7 +11,7 @@ import os
 from web3.auto import w3
 from eth_account.messages import defunct_hash_message
 
-from flask_jwt_extended import JWTManager, jwt_required, create_access_token, create_refresh_token, get_jwt_identity, set_access_cookies, set_refresh_cookies
+from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity, set_access_cookies
 
 app = Flask(__name__,static_url_path='/static')
 app.jinja_env.add_extension('jinja2.ext.do')
@@ -24,7 +24,6 @@ app.config['JWT_SECRET_KEY'] = ''.join(random.choice(string.ascii_lowercase) for
 app.config['JWT_TOKEN_LOCATION'] = ['cookies']
 app.config['JWT_COOKIE_SECURE'] = True
 #app.config['JWT_ACCESS_COOKIE_PATH'] = '/api/'
-app.config['JWT_REFRESH_COOKIE_PATH'] = '/token/refresh'
 app.config['JWT_COOKIE_CSRF_PROTECT'] = True
 jwt = JWTManager(app)
 
@@ -79,9 +78,7 @@ def login():
     print("[+] OMG looks good")
 
     access_token = create_access_token(identity=public_address)
-    refresh_token = create_refresh_token(identity=public_address)
 
     resp = jsonify({'login': True})
     set_access_cookies(resp, access_token)
-    set_refresh_cookies(resp, refresh_token)
     return resp, 200
