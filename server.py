@@ -7,6 +7,7 @@ import json
 import random
 import string
 import os
+import time
 
 from web3.auto import w3
 from eth_account.messages import defunct_hash_message
@@ -65,7 +66,13 @@ def login():
     public_address = request.json[0]
     signature = request.json[1]
 
-    original_message = 'I am signing my one-time nonce: {}'.format("123")
+    domain = "simple-flask-metamask.herokuapp.com"
+
+    rightnow = int(time.time())
+    sortanow = rightnow-rightnow%600
+   
+    original_message = 'Signing in to {} at {}'.format(domain,sortanow)
+    print("[+] checking: "+original_message)
     message_hash = defunct_hash_message(text=original_message)
     signer = w3.eth.account.recoverHash(message_hash, signature=signature)
     print("[+] fascinating")

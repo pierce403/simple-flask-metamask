@@ -11,7 +11,10 @@ function login()
 
  // signer.signMessage("hello");
 
-signer.signMessage(`I am signing my one-time nonce: 123`, accountAddress, "test password!")
+rightnow = (Date.now()/1000).toFixed(0)
+sortanow = rightnow-(rightnow%600)
+
+signer.signMessage("Logging in to "+document.domain+" at "+sortanow, accountAddress, "test password!")
             .then((signature) => {               handleAuth(accountAddress, signature)
             });
 }
