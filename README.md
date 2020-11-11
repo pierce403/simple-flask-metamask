@@ -1,6 +1,10 @@
 # simple-flask-metamask
 simple flask+metamask integration example
 
+Live demo here: https://simple-flask-metamask.herokuapp.com/
+
+Useful sources:
+
 https://www.toptal.com/ethereum/one-click-login-flows-a-metamask-tutorial
 
 https://ethereum.stackexchange.com/questions/35486/how-to-verify-metamask-account-holder-is-the-real-owner-of-the-address
