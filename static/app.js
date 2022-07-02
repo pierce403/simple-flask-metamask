@@ -37,7 +37,7 @@ function handleAuth(accountAddress, signature)
 
 }
 
-ethereum.enable().then(function () {
+ethereum.request({ method: "eth_requestAccounts" }).then(function () {
 
     provider = new ethers.providers.Web3Provider(web3.currentProvider);
 
